@@ -1,0 +1,82 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__91647283>
+  };
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type Game__250390341 = {#brCs; #freeFire};
+type Game__340879520 = {#brCs; #freeFire};
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type Mode__764120004 = {#loneWolf};
+type Mode__888532610 = {#loneWolf};
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__756013677 =
+  {
+    accessControlState : AccessControlState__201339279;
+    state : {var nextTournamentId : Nat};
+    tournaments : Map__386906547<Nat, Tournament__914092331>
+  };
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type Status__767321834 = {#closed; #full; #open};
+type Status__977680552 = {#closed; #full; #open};
+type Timestamp__301639476 = Int;
+type Tournament__116332582 =
+  {
+    createdAt : Timestamp__301639476;
+    creatorName : Text;
+    currentPlayers : Nat;
+    entryFee : Nat;
+    game : Game__250390341;
+    id : Nat;
+    map : Text;
+    maxPlayers : Nat;
+    mode : Mode__764120004;
+    name : Text;
+    players : [Text];
+    roomId : Text;
+    roomPassword : Text;
+    status : Status__767321834
+  };
+type Tournament__914092331 =
+  {
+    createdAt : Int;
+    creatorName : Text;
+    currentPlayers : Nat;
+    entryFee : Nat;
+    game : Game__340879520;
+    id : Nat;
+    map : Text;
+    maxPlayers : Nat;
+    mode : Mode__888532610;
+    name : Text;
+    players : [Text];
+    roomId : Text;
+    roomPassword : Text;
+    status : Status__977680552
+  };
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260913_000000" : (_old : {}) -> NewActor__756013677
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable state : {var nextTournamentId : Nat};
+  stable tournaments :
+    {
+      var root : Node__430031793<Nat, Tournament__116332582>;
+      var size : Nat__58649523
+    }
+};

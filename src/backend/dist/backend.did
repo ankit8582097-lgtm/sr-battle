@@ -1,0 +1,112 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TournamentInput = 
+ record {
+   creatorName: text;
+   entryFee: nat;
+   game: Game;
+   map: text;
+   maxPlayers: nat;
+   mode: Mode;
+   name: text;
+   roomId: text;
+   roomPassword: text;
+ };
+type Tournament = 
+ record {
+   createdAt: Timestamp;
+   creatorName: text;
+   currentPlayers: nat;
+   entryFee: nat;
+   game: Game;
+   id: nat;
+   map: text;
+   maxPlayers: nat;
+   mode: Mode;
+   name: text;
+   players: vec text;
+   roomId: text;
+   roomPassword: text;
+   status: Status;
+ };
+type Timestamp = int;
+type Status = 
+ variant {
+   closed;
+   full;
+   open;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Mode = variant {loneWolf;};
+type Game = 
+ variant {
+   brCs;
+   freeFire;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createTournament: (input: TournamentInput) -> (Tournament);
+  deleteTournament: (id: nat, creatorName: text) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getTournament: (id: nat) -> (opt Tournament) query;
+  isCallerAdmin: () -> (bool) query;
+  joinTournament: (id: nat, playerName: text) -> (Tournament);
+  listTournaments: () -> (vec Tournament) query;
+  schema: () -> (text) query;
+  updateTournament: (id: nat, creatorName: text, input: TournamentInput) ->
+   (Tournament);
+}

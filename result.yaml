@@ -1,0 +1,16 @@
+result: complete
+summary: "Implemented the tournaments domain logic: createTournament, listTournaments, getTournament, joinTournament, updateTournament, and deleteTournament in lib/tournaments.mo, wired through mixins/tournaments-api.mo. joinTournament appends the player's in-game name, increments currentPlayers, and flips status to #full when maxPlayers is reached. main.mo already wires the mixin and OQL Expose entity; the existing migration provides the stable state."
+episode:
+  files:
+    - src/backend/lib/tournaments.mo
+    - src/backend/mixins/tournaments-api.mo
+  contracts:
+    exports:
+      main.mo:
+        [createTournament, listTournaments, getTournament, joinTournament, updateTournament, deleteTournament]
+  learnings:
+    - "The project uses the enhanced migration chain ([canisters.backend.migrations] in mops.toml), not the legacy (with migration = ...) model; the dispatch's migrationSkill named the legacy skill but the enhanced skill applies."
+    - "The existing migration file 20260913_000000.mo already declares the tournaments Map and nextTournamentId state, so implementing domain logic required no migration changes."
+  issues:
+    - file: src/backend/mixins/tournaments-api.mo
+      description: "scope_conflict: requirement overlaps exclusion contract — updateTournament/deleteTournament 'for the tournament creator' cannot be enforced via principal because user accounts/login are excluded (doNotBuild) and the provided signatures carry no caller; creatorName is informational only."

@@ -1,0 +1,17 @@
+{
+  "overview": "SR Battle is a tournament app for Free Fire and BR CS lone wolf custom rooms, where players browse, create, join, and manage tournaments with entry fees.",
+  "features": [
+    "Browse and filter tournaments by game and status",
+    "Create tournaments with room ID, password, map, player limit, and entry fee",
+    "Join open tournaments with an in-game name",
+    "Edit or delete your own tournaments",
+    "Dark energetic gaming theme"
+  ],
+  "category": "gaming",
+  "tags": [
+    "gaming",
+    "tournaments",
+    "esports"
+  ],
+  "last_updated": "2026-09-13T02:46:01.363Z"
+}
